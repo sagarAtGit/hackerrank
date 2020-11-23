@@ -1,0 +1,38 @@
+def isNotPalindrome(s):
+    if s != s[::-1]:
+        return True
+    return False
+
+def buildPalindrome(index, s):
+    boundary = 1
+    if len(s)%2:
+        res = s[index]
+        carry = 0
+    else:
+        res = s[index:index+2]
+        carry = 1
+    while index >= boundary and index + boundary + carry < len(s):
+        resCopy = res
+        res = res + s[index+boundary+carry]
+        res = s[index-boundary] + res
+        if isNotPalindrome(res):
+            return resCopy
+        boundary += 1
+    return res    
+
+#s= "hackerrekcahba"
+s = input()
+Set = set()
+
+for ch in s:
+    Set.add(ch)
+
+if len(Set) == 1:
+    print(s)
+else:
+    result = s[0]
+    for i in range(1, len(s)-1):
+        res = buildPalindrome(i, s)
+        if len(result) < len(res):
+            result = res
+    print(result)
